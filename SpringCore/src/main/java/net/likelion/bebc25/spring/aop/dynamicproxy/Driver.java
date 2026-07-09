@@ -1,12 +1,12 @@
-package net.likelion.bebc25.spring.di.constructor;
+package net.likelion.bebc25.spring.aop.dynamicproxy;
 
 public class Driver {
     private final Car car;
 
     // DI
     Driver(Car car){
-        System.out.println("called Constructor Injection");
-        this.car = car;
+        System.out.println("called Constructor Injection" + car);
+        this.car = car; // car는 LogProxy
     }
 
     public void driveCar(){

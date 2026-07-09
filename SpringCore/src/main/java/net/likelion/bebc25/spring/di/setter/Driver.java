@@ -1,10 +1,13 @@
 package net.likelion.bebc25.spring.di.setter;
 
+import java.security.spec.RSAOtherPrimeInfo;
+
 public class Driver {
     private Car car;
 
-    // DI
-    Driver(Car car){
+    // setter injection
+    public void setCar(Car car){
+        System.out.println("called Setter Injection");
         this.car = car;
     }
 
