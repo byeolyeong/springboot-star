@@ -10,6 +10,24 @@ public class PostDto {
     private String author;
     private LocalDateTime createdAt;
 
+    public PostDto(){
+
+    }
+
+    public PostDto(String title, String content, String author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
+
+    public PostDto(int id, String title, String content, String author, LocalDateTime createdAt) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.createdAt = createdAt;
+    }
+
     public int getId() {
         return id;
     }
@@ -60,4 +78,5 @@ public class PostDto {
                 ", createdAt=" + createdAt +
                 '}';
     }
+
 }
