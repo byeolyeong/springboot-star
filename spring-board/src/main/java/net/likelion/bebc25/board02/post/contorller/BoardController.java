@@ -1,7 +1,7 @@
-package net.likelion.bebc25.board.post.contorller;
+package net.likelion.bebc25.board02.post.contorller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.likelion.bebc25.board.post.dto.PostDto;
+import net.likelion.bebc25.board01.post.dto.PostDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequestMapping("/02")
 public class BoardController {
 
     private final List<PostDto> fakePosts;
@@ -42,42 +43,8 @@ public class BoardController {
         return list;
     }
 
-    // index.html 요청을 처리하는 컨트롤러
-    @RequestMapping(value = "/index", method= RequestMethod.GET)
-    @ResponseBody
-    public String getIndex(){
-        String result = """
-                <!DOCTYPE html>
-                <html lang="ko">
-                <head>
-                  <meta charset="UTF-8">
-                  <title>스프링 부트 게시판 데모 홈</title>
-                  <link rel="stylesheet" href="/board/css/common.css">
-                  <link rel="stylesheet" href="/board/css/index.css">
-                </head>
-                <body>
-                  <div class="container">
-                    <div class="welcome-card">
-                      <h1>스프링 부트 게시판 v.02</h1>
-                      <p>스프링 부트 게시판에 오신걸 환영합니다.</p>
-                      <p><a href="/01/board/list.html">01 - Controller에서 HTML 하드코딩</a></p>
-                      <p>현재 시간은 %s 입니다.</p>
-                      <div>
-                        <a href="board/list.html" class="btn-lg">게시글 목록으로 이동</a>
-                      </div>
-                    </div>
-                  </div>
-                </body>
-                </html>
-                """;
-
-        result = result.formatted(LocalDateTime.now());
-
-        return result;
-    }
-
     // 게시글 목록 조회하는 컨트롤러
-    @GetMapping("/01/board/list.html")
+    @GetMapping("/board/list.html")
     @ResponseBody
     public String getBoardList(){
         // 게시글 목록 조회(데이터)
@@ -150,7 +117,7 @@ public class BoardController {
     }
 
     // 게시글 상세 조회하는 컨트롤러
-    @GetMapping("/01/board/detail.html")
+    @GetMapping("/board/detail.html")
     @ResponseBody
     public String getDetail(@RequestParam("id") int id) {
         PostDto post = getPosts().get(id-1);
@@ -214,7 +181,7 @@ public class BoardController {
     }
 
     // 게시글 등록 화면을 요청하는 컨트롤러
-    @GetMapping("/01/board/write.html")
+    @GetMapping("/board/write.html")
     @ResponseBody
     public String getWriteForm(){
         String result = """
@@ -265,7 +232,7 @@ public class BoardController {
     }
 
     // 게시글 수정 화면을 요청하는 컨트롤러
-    @GetMapping("/01/board/edit.html")
+    @GetMapping("/board/edit.html")
     @ResponseBody
     public String getEditForm(){
         String result = """
@@ -320,7 +287,7 @@ public class BoardController {
 
 
     // 게시글 등록 요청을 처리하는 컨트롤러
-    @PostMapping("/01/board/write")
+    @PostMapping("/board/write")
     public String writePost(@RequestParam("title") String title,
                             @RequestParam("content") String content,
                             @RequestParam("author") String author){
@@ -342,7 +309,7 @@ public class BoardController {
     }
 
     // 게시글 수정 요청을 처리하는 컨트롤러
-    @PostMapping("/01/board/edit")
+    @PostMapping("/board/edit")
     public String editPost(@ModelAttribute PostDto post){
         log.debug(post.toString());
         updatePost(post);
@@ -365,7 +332,7 @@ public class BoardController {
     }
 
     // 게시글 삭제 요청을 처리하는 컨트롤러
-    @PostMapping("/01/board/delete")
+    @PostMapping("/board/delete")
     public String deletePost(){
         return "삭제 완료 후 보여줄 페이지";
     }

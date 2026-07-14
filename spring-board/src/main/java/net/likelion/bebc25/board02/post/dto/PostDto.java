@@ -1,4 +1,4 @@
-package net.likelion.bebc25.board.post.dto;
+package net.likelion.bebc25.board02.post.dto;
 
 import java.time.LocalDateTime;
 
