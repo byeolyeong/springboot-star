@@ -3,6 +3,7 @@ package net.likelion.bebc25.board02.post.contorller;
 import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.board01.post.dto.PostDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/02")
+@RequestMapping("/02/board")
 public class BoardController {
 
     private final List<PostDto> fakePosts;
@@ -44,7 +45,7 @@ public class BoardController {
     }
 
     // 게시글 목록 조회하는 컨트롤러
-    @GetMapping("/board/list.html")
+    @GetMapping("/list.html")
     @ResponseBody
     public String getBoardList(){
         // 게시글 목록 조회(데이터)
@@ -117,71 +118,16 @@ public class BoardController {
     }
 
     // 게시글 상세 조회하는 컨트롤러
-    @GetMapping("/board/detail.html")
-    @ResponseBody
-    public String getDetail(@RequestParam("id") int id) {
+    @GetMapping("/detail.html")
+    public String getDetail(@RequestParam("id") int id, Model model) {
         PostDto post = getPosts().get(id-1);
-        String result = """
-                <!DOCTYPE html>
-                <html lang="ko">
-                <head>
-                  <meta charset="UTF-8">
-                  <title>스프링 게시판 - 상세 보기</title>
-                  <link rel="stylesheet" href="/board/css/common.css">
-                  <link rel="stylesheet" href="/board/css/detail.css">
-                </head>
-                <body>
-                  <div class="container">
-                    <h1>게시글 상세 정보</h1>
-                    <div class="nav">
-                      <a href="list.html">목록으로</a>
-                      <a href="write.html">새 글 쓰기</a>
-                    </div>
-                
-                    <table style="margin-bottom: 20px;">
-                      <tr>
-                        <th style="width: 60px;">번호</th>
-                        <td>%s</td>
-                      </tr>
-                      <tr>
-                        <th>제목</th>
-                        <td>%s</td>
-                      </tr>
-                      <tr>
-                        <th>작성자</th>
-                        <td>%s</td>
-                      </tr>
-                      <tr>
-                        <th>작성일시</th>
-                        <td>%s</td>
-                      </tr>
-                      <tr>
-                        <th>내용</th>
-                        <td style="white-space: pre-wrap;">%s</td>
-                      </tr>
-                    </table>
-                
-                    <div>
-                      <a href="edit.html" class="btn">수정하기</a>
-                      <a href="list.html" class="btn btn-secondary">목록으로</a>
-                    </div>
-                  </div>
-                </body>
-                </html>
-                
-                """.formatted(
-                post.getId(),
-                post.getTitle(),
-                post.getAuthor(),
-                post.getCreatedAt(),
-                post.getContent()
-        );
 
-        return result;
+        model.addAttribute("post", post);
+        return "board/detail"; // 템플릿 파일 경로
     }
 
     // 게시글 등록 화면을 요청하는 컨트롤러
-    @GetMapping("/board/write.html")
+    @GetMapping("/write.html")
     @ResponseBody
     public String getWriteForm(){
         String result = """
@@ -232,7 +178,7 @@ public class BoardController {
     }
 
     // 게시글 수정 화면을 요청하는 컨트롤러
-    @GetMapping("/board/edit.html")
+    @GetMapping("/edit.html")
     @ResponseBody
     public String getEditForm(){
         String result = """
@@ -287,7 +233,7 @@ public class BoardController {
 
 
     // 게시글 등록 요청을 처리하는 컨트롤러
-    @PostMapping("/board/write")
+    @PostMapping("/write")
     public String writePost(@RequestParam("title") String title,
                             @RequestParam("content") String content,
                             @RequestParam("author") String author){
@@ -309,7 +255,7 @@ public class BoardController {
     }
 
     // 게시글 수정 요청을 처리하는 컨트롤러
-    @PostMapping("/board/edit")
+    @PostMapping("/edit")
     public String editPost(@ModelAttribute PostDto post){
         log.debug(post.toString());
         updatePost(post);
@@ -332,7 +278,7 @@ public class BoardController {
     }
 
     // 게시글 삭제 요청을 처리하는 컨트롤러
-    @PostMapping("/board/delete")
+    @PostMapping("/delete")
     public String deletePost(){
         return "삭제 완료 후 보여줄 페이지";
     }
