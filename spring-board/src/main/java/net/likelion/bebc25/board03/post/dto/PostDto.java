@@ -2,9 +2,16 @@ package net.likelion.bebc25.board03.post.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@Builder
 // 게시글 하나를 저장할 객체
 // 게시글 하나의 데이터를 저장하는 객체(DTO)
 // Controller <-> Service <-> Repository 사이에서 데이터를 전달할 때 사용
@@ -31,89 +38,5 @@ public class PostDto {
     // 작성 시간
     private LocalDateTime createdAt;
 
-    // boolean 타입 getter는 is--- 형태로 사용
-    public boolean isSecret() {
-        return secret;
-    }
-
-    public void setSecret(boolean secret) {
-        this.secret = secret;
-    }
-
-    // 기본 생성자 생성
-    // Spring이 객체를 생성할 때 사용
-    public PostDto(){
-
-    }
-
-    // 글 작성 시 사용하는 생성자
-    public PostDto(String title, String content, String author) {
-        this.title = title;
-        this.content = content;
-        this.author = author;
-    }
-
-    // 게시글 전체 정보를 생성할 때 사용하는 생성자들
-    public PostDto(int id, String title, String content, String author, LocalDateTime createdAt) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.author = author;
-        this.createdAt = createdAt;
-    }
-
-    // 아래는 각 필드의 getter / setter
-    // 다른 클래스에서 값을 읽거나 수정하기 위해서 사용
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    // 객체 내용을 출력할 때 사용
-    @Override
-    public String toString() {
-        return "PostDto{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 
 }

@@ -33,9 +33,9 @@ public class BoardController {
     @GetMapping("/list.html")
     public String getBoardList(Model model){
         // 게시글 목록 조회(데이터)
-        List<PostDto> posts = postService.getPosts();
-        model.addAttribute("posts", posts);
-        return "board/list";
+        List<PostDto> posts = postService.getPosts();   // 서비스를 호출해서 데이터를 받아옴
+        model.addAttribute("posts", posts); // 모델에 등록을 함
+        return "board/list"; // 결과 화면을 view에 전달
     }
 
     // 게시글 상세 조회하는 컨트롤러

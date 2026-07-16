@@ -2,6 +2,7 @@ package net.likelion.bebc25.board03.post.service;
 
 import net.likelion.bebc25.board03.post.dto.PostDto;
 import net.likelion.bebc25.board03.post.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class PostServiceImpl implements PostService {
     // Repository 의존성 주입
     private final PostRepository postRepository;
 
-    public PostServiceImpl(PostRepository postRepository){
+    public PostServiceImpl(@Qualifier("jdbcTemplatePostRepository") PostRepository postRepository){
         this.postRepository = postRepository;
     }
 
